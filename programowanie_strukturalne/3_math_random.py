@@ -16,6 +16,8 @@ losuj=random.random()
 print(f'zmienna wylosowana:  {losuj}')
 
 losujZlisty=random.choice([1, 2, 3, 4])
-print(losujZlisty)
+print('wylosowana liczba z listy: {losujZlisty}')
+
+
 
 print()

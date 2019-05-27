@@ -42,7 +42,11 @@ imie3=input('Podaj imie3:')
 
 
 imiona={
-print('imie1'),print(imie1),
-'imie2':print(imie2),
-'imie3':print(imie3),
+0:imie1,
+1:imie2,
+2:imie3
 }
+
+print(f'\nImie1: {imiona[0]}')
+print(f'\nImie2: {imiona[1]}')
+print(f'\nImie3: {imiona[2]}')
