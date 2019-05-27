@@ -90,3 +90,17 @@ print(f'Przed wywolaniem show1 {miasto1}')
 print(f'Id miasto show1 {id(miasto1)}')
 show1(dict(miasto1))
 print(f'Po wywolaniu show1 {miasto1}')
+
+
+#############################################################
+
+#try except
+
+def dzielenie(Liczba1, Liczba2):
+    try:
+    result Liczba1 / Liczba2
+    print(f'{x}/{y} = {result}')
+except:
+    print('Error, dzielisz przez 0!')
+
+dzielenie(2, 0)
