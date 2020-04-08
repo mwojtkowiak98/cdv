@@ -1,0 +1,243 @@
+1.
+class Osoba {
+constructor(imie, wiek){
+  this.imie = imie;
+  this.wiek = wiek;
+  }
+  
+  przedstaw(imie, wiek) {
+    return `Jestem ${this.imie}, mam ${this.wiek} lat.`;
+  }
+}
+
+var osoba1 = new Osoba();
+console.log(osoba1.przedstaw());
+
+osoba1.imie="Marcin";
+osoba1.wiek=21;
+console.log(osoba1.przedstaw());
+
+2.
+class Osoba {
+constructor(imie, wiek){
+  this.imie = imie;
+  this.wiek = wiek;
+  }
+  
+  przedstaw(imie, wiek) {
+    return `Jestem ${this.imie}, mam ${this.wiek} lat.`;
+  }
+}
+
+class Pracownik extends Osoba{
+constructor(imie, wiek, zawod){
+super(imie, wiek);
+this.zawod = zawod;
+}
+
+przedstawpracownika(imie, wiek, zawod){
+return this.przedstaw()+' Pracuje jako '+this.zawod;
+}
+}
+
+var osoba2 = new Pracownik("Darek", 25, "portier");
+console.log(osoba2.przedstawpracownika());
+
+osoba2.imie="Alan";
+osoba2.wiek=45;
+
+console.log(osoba2.przedstawpracownika());
+
+3.
+class Osoba {
+constructor(imie, wiek){
+  this.imie = imie;
+  this.wiek = wiek;
+  }
+  
+  get imie(){
+  return this._imie;
+	}
+  
+  set imie(value){
+  this._imie=value;
+	}
+  
+  get wiek(){
+  return this._wiek;
+	}
+  
+  set wiek(value){
+  this._wiek=value;
+	}
+  
+  przedstaw(imie, wiek) {
+    return `Jestem ${this.imie}, mam ${this.wiek} lat.`;
+  }
+}
+
+
+class Pracownik extends Osoba{
+constructor(imie, wiek, zawod){
+super(imie, wiek);
+this.zawod = zawod;
+}
+
+przedstawpracownika(imie, wiek, zawod){
+return this.przedstaw()+' Pracuje jako '+this.zawod;
+}
+}
+
+var osoba2 = new Pracownik("Darek", 25, "portier");
+console.log(osoba2.przedstawpracownika());
+
+osoba2.imie="Alan";
+osoba2.wiek=45;
+
+console.log(osoba2.przedstawpracownika());
+
+4.
+class Osoba {
+constructor(imie, wiek){
+  this.imie = imie;
+  this.wiek = wiek;
+  }
+  
+  get imie(){
+  return this._imie;
+	}
+  
+  set imie(imie){
+  this._imie=this.formatujimie(imie);
+	}
+  
+  get wiek(){
+  return this._wiek;
+	}
+  
+  set wiek(value){
+  this._wiek=value;
+	}
+  
+  formatujimie(imie) {
+  return (imie.charAt(0).toUpperCase()+imie.slice(1));
+  }
+  
+  przedstaw(imie, wiek) {
+    return `Jestem ${this.imie}, mam ${this.wiek} lat.`;
+  }
+}
+
+var osoba1 = new Osoba("darek", 44);
+console.log(osoba1.przedstaw());
+
+osoba1.imie="alan";
+console.log(osoba1.przedstaw());
+
+5.
+class Osoba {
+constructor(imie, wiek){
+  this.imie = imie;
+  this.wiek = wiek;
+  }
+  
+  get imie(){
+  return this._imie;
+	}
+  
+  set imie(imie){
+  this._imie=this.formatujimie(imie);
+	}
+  
+  get wiek(){
+  return this._wiek;
+	}
+  
+  set wiek(value){
+  if(typeof(value) !== "number"){
+  throw new TypeError();
+  }
+  if(value<0){
+  throw new RangeError();
+	}
+  this._wiek=value;
+	}
+  
+  formatujimie(imie) {
+  return (imie.charAt(0).toUpperCase()+imie.slice(1));
+  }
+  
+  przedstaw(imie, wiek) {
+    return `Jestem ${this.imie}, mam ${this.wiek} lat.`;
+  }
+}
+
+var osoba1 = new Osoba("darek", 44);
+console.log(osoba1.przedstaw());
+
+osoba1.imie="alan";
+console.log(osoba1.przedstaw());
+
+var osoba2 = new Osoba("marek", "nieliczba");
+var osoba3 = new Osoba("arek", -5);
+
+6.
+class Osoba {
+constructor(imie, wiek){
+  this.imie = imie;
+  this.wiek = wiek;
+  }
+  
+  get imie(){
+  return this._imie;
+	}
+  
+  set imie(imie){
+  this._imie=this.formatujimie(imie);
+	}
+  
+  get wiek(){
+  return this._wiek;
+	}
+  
+  set wiek(value){
+  try{
+  if(typeof(value) !== "number"){
+  throw new TypeError();
+  }
+  }
+  catch(err){
+  console.log("argument musi byc liczba: "+err)
+  }
+  try{
+  if(value<0){
+  throw new RangeError();
+	}
+  }
+  catch(err){
+  console.log("argument musi byc liczba dodatnia: "+err)
+  }
+  this._wiek=value;
+	}
+  
+  formatujimie(imie) {
+  return (imie.charAt(0).toUpperCase()+imie.slice(1));
+  }
+  
+  przedstaw(imie, wiek) {
+    return `Jestem ${this.imie}, mam ${this.wiek} lat.`;
+  }
+}
+
+var osoba1 = new Osoba("darek", 44);
+console.log(osoba1.przedstaw());
+
+osoba1.imie="alan";
+console.log(osoba1.przedstaw());
+
+var osoba2 = new Osoba("marek", "nieliczba");
+var osoba3 = new Osoba("arek", -5);
+
+
+
+

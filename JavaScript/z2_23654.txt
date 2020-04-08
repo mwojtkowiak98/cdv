@@ -1,0 +1,105 @@
+CW. 1
+
+1.
+var samochod={
+marka: 'mercedes',
+cena: '9999$',
+moc: 50,
+zwiekszMoc: function(zwieksz)
+{
+samochod.moc+=zwieksz;
+}
+}
+
+2.
+car = samochod;
+console.log(car)
+
+3.
+car.zwiekszMoc(20);
+
+4.
+console.log(car)
+
+5.
+function samochod(marka, cena, moc) {
+ this.marka = marka;
+ this.cena = cena;
+ this.moc = moc;
+}
+
+samochod.prototype.zwiekszMoc = function(zwieksz) {
+if(isNaN(this.moc)){
+this.moc=0;
+}
+this.moc+=zwieksz;
+};
+
+6.
+var auta = new Array(3);
+auta[0] =  auto1 = new samochod("mercedes", "99999", 40)
+auta[1] =  auto2 = new samochod("nissan", "8888899", 120)
+auta[2] =  auto3 = new samochod("BMW", "9999", 300)
+
+7.
+for(var i = 0; i<auta.length; i++){
+console.log(auta[i]);
+}
+
+8.
+auta[1].zwiekszMoc(99);
+
+9.
+for(var i = 0; i<auta.length; i++){
+console.log(auta[i]);
+}
+
+10.
+Nie jest możliwe uzyskanie tekstowej reprezentacji obiektu wywołując metodę toString().
+Implementacja toString() jest wbudowana w JavaScript.
+Musielibyśmy przysłonić domyślne dziedziczenie.
+
+
+//albo console.log(samochod.toString());
+
+11.
+samochod.prototype.toString = function(){
+console.log (`{marka: ${this.marka}, cena: ${this.cena}, moc: ${this.moc}}`);
+}
+
+var car = new samochod("Fiat", "45000", 125);
+car.toString();
+
+12.
+auto1.toString();
+
+
+
+CW. 2
+
+1.
+var samochod={
+marka: 'mercedes',
+cena: '9999$',
+moc: 50,
+zwiekszMoc: function(zwieksz)
+{
+samochod.moc+=zwieksz;
+}
+}
+
+car = samochod;
+console.log(car)
+
+console.log(JSON.stringify(samochod));
+
+
+//podczas generowania dla obiektów funkcje i undefined są pomijane.
+
+2.
+var json='{"marka":"nissan","cena":99999999, "moc":425}';
+
+console.log(JSON.parse(json));
+
+
+

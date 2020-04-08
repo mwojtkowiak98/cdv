@@ -1,0 +1,170 @@
+﻿cw. 1
+1
+
+
+function kwadrat()
+{
+var parametr = prompt("Podaj wartosc");
+parametr*=parametr;
+console.log(parametr);
+}
+
+
+kwadrat();
+
+
+---
+2a
+
+
+var t=[3, 8, 10];
+var i;
+for(i = 0; i<3; i++)
+{
+t[i]*=t[i];
+console.log(t[i]);
+}
+
+
+---
+2b
+
+
+var t=[3, 8, 10];
+var i=3;
+var j=0;
+for(i of t)
+{
+t[j]*=t[j];
+console.log(t[j]);
+j+=1;
+}
+
+
+---
+2c
+
+
+var t=[3, 8, 10];
+var i=0;
+for(i in t)
+{
+t[i]*=t[i];
+console.log(t[i]);
+i+=1;
+}
+
+
+---
+2d
+
+
+var i=0;
+
+
+var t=[3, 8, 10];
+t.forEach(kwadrat)
+{
+console.log(t);
+}
+
+
+function kwadrat()
+{
+t[i]*=t[i];
+i+=1;
+}
+
+
+---
+3
+
+
+var t=[3, 8, 10];
+var kwadraty = t.map((x) => {return x*x;})
+console.log(kwadraty);
+
+
+cw. 2
+
+
+var truefalse = (function ()
+{
+var x = false;
+return function ()
+{console.log(x);
+if(x==true) x = false;
+else x=true;}
+}) ();
+
+
+truefalse();
+truefalse();
+truefalse();
+truefalse();
+
+
+cw. 3
+1
+
+
+var add=0;
+function sum()
+{
+for(var i = 0; i<tab.length; i++)
+{
+add=add+tab[i];
+}
+console.log(add);
+}
+
+
+tab=[1, 2, 5, 10, 5];
+
+
+sum();
+
+
+---
+2
+
+
+var add=0;
+var check=0;
+function sum()
+{
+        for(var i = 0; i<tab.length; i++)
+        {
+                if(typeof(tab[i])==="string")
+                {
+                  tab[i]=parseInt(tab[i]);
+            if(isNaN(tab[i]))
+            {
+                  tab[i]=0;
+      check=check+1;
+            }
+                }
+          if(typeof(tab[i])==="number")
+                {
+                        add=add+tab[i];
+                }
+        }
+  
+  
+  if(tab.length==check)
+  {
+          add=NaN;
+  }
+  
+console.log(add);
+}
+
+
+
+
+tab=[1, 2, 5, '10', 'slowo', 'slowo2', 10, 'cos', 5];
+//tab=[];
+//tab=['slowo', 's', 'sa'];
+
+
+sum();
