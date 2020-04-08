@@ -1,0 +1,17 @@
+.first{
+    border:solid thin green;
+    border-top: dotted medium greenyellow;
+}
+
+.second{
+    border:solid medium blue;
+    border-bottom: double;
+    border-width: 1px 5px 15px 8px;
+}
+
+.third{
+    border:solid thick red;
+    border-radius: 20px;
+    border-right-style: dashed;
+    border-left-style: none;
+}
