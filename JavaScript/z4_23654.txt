@@ -1,0 +1,41 @@
+1.
+<html>
+   <head>
+      <title>jQuery</title>
+      <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script>
+        $(document).ready(function() {
+          $('ul > li').each(function() {
+              $(this).prepend("<b>" + ($(this).index()+1) + "</b> ");});
+        });
+      </script>
+   </head>
+	
+   <body>
+        <ul>
+            <li>Polska</li>
+            <li>Niemcy</li>
+            <li>Czechy</li>
+        </ul>
+   </body>
+</html>
+
+2.
+<html>
+   <head>
+      <title>jQuery2</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("input").change(function() {
+                    $("form").append("<br><p>Zmieniono text na: "+$("input").val()+"</p>");
+                })
+            })
+        </script>
+   </head>
+   <body>
+        <form>
+            <input type="text">
+        </form>
+   </body>
+</html>
