@@ -1,0 +1,3 @@
+Formularz do wporwadzania słów,
+niewłaściwe: czarny, biały
+zamiana: _#***#_
