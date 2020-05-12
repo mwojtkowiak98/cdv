@@ -1,0 +1,157 @@
+CREATE TABLE kategorie (
+	nazwa VARCHAR(50) NOT NULL,
+	CONSTRAINT kategoria_pk PRIMARY KEY ( nazwa )
+);
+
+CREATE TABLE klienci (
+	klient_id INTEGER GENERATED ALWAYS AS IDENTITY,
+	e_mail VARCHAR(50) NOT NULL,
+	adres VARCHAR(150) NOT NULL,
+	typ CHAR(1) NOT NULL,
+	CONSTRAINT chk_f_or_p CHECK ( typ = 'F' OR typ = 'P' ),
+	CONSTRAINT klient_pk PRIMARY KEY ( klient_id ),
+	CONSTRAINT emaili__un UNIQUE ( e_mail )	
+);
+
+CREATE TABLE zamowienia (
+    id_zamowienia     INTEGER GENERATED ALWAYS AS IDENTITY,
+    data_zamowienia   DATE NOT NULL,
+    pelna_wartosc     NUMERIC(10, 2) NOT NULL,
+    status_platnosci  VARCHAR(35) NOT NULL,
+    klient_id  INTEGER NOT NULL,
+	CONSTRAINT zamowienie_pk PRIMARY KEY ( id_zamowienia ),
+	CONSTRAINT zamowienie_klient_fk FOREIGN KEY ( klient_id ) REFERENCES klienci ( klient_id )
+);
+
+CREATE TABLE producenci (
+	nazwa VARCHAR(50) NOT NULL,
+	CONSTRAINT producent_pk PRIMARY KEY ( nazwa )
+);
+
+CREATE TABLE podkategorie (
+	nazwa VARCHAR(50) NOT NULL,
+	kategoria_nazwa VARCHAR(50) NOT NULL,
+	CONSTRAINT podkategoria_pk PRIMARY KEY ( nazwa ),
+	CONSTRAINT podkategoria_kategoria_fk FOREIGN KEY ( kategoria_nazwa ) REFERENCES kategorie ( nazwa )
+);
+
+CREATE TABLE statusy (
+    nazwa VARCHAR(50) NOT NULL,
+	CONSTRAINT status_pk PRIMARY KEY ( nazwa )
+);
+
+CREATE TABLE produkty (
+    nazwa               VARCHAR(250) NOT NULL,
+    ilosc               INTEGER NOT NULL,
+    kwota               NUMERIC(10, 2) NOT NULL,
+    opis                VARCHAR(4000),
+    producent_nazwa     VARCHAR(50) NOT NULL,
+    status_nazwa        VARCHAR(50) NOT NULL,
+    podkategoria_nazwa  VARCHAR(50) NOT NULL,
+	CONSTRAINT produkt_pk PRIMARY KEY ( nazwa),
+	CONSTRAINT produkt_podkategoria_fk FOREIGN KEY ( podkategoria_nazwa ) REFERENCES podkategorie ( nazwa ),
+	CONSTRAINT produkt_producent_fk FOREIGN KEY ( producent_nazwa ) REFERENCES producenci ( nazwa ),
+	CONSTRAINT produkt_status_fk FOREIGN KEY ( status_nazwa ) REFERENCES statusy ( nazwa ),
+	CONSTRAINT produkt_UN UNIQUE (nazwa, kwota)
+);
+
+CREATE TABLE komentarze (
+	nick VARCHAR(25) NOT NULL,
+	tresc VARCHAR(500) NOT NULL,
+	klient_id INTEGER NOT NULL,
+	produkt_nazwa VARCHAR(250) NOT NULL,
+	CONSTRAINT komentarz_pk PRIMARY KEY ( nick ),
+	CONSTRAINT komentarz_klient_fk FOREIGN KEY (klient_id) REFERENCES klienci ( klient_id ),
+	CONSTRAINT komentarz_produkt_fk FOREIGN KEY ( produkt_nazwa ) REFERENCES produkty ( nazwa )
+);
+
+CREATE TABLE os_fizyczne (
+	klient_id INTEGER NOT NULL,
+	imie VARCHAR(40) NOT NULL,
+	nazwisko VARCHAR(45) NOT NULL,
+	CONSTRAINT os_fizyczna_pk PRIMARY KEY ( klient_id ),
+	CONSTRAINT os_fizyczna_klient_fk FOREIGN KEY ( klient_id ) REFERENCES klienci ( klient_id )
+);
+
+CREATE TABLE os_prawne (
+	klient_id INTEGER NOT NULL,
+	nazwa VARCHAR(100) NOT NULL,
+	regon INTEGER NOT NULL,
+	CONSTRAINT os_prawna_pk PRIMARY KEY ( klient_id ),
+	CONSTRAINT os_prawna_klient_fk FOREIGN KEY ( klient_id ) REFERENCES klienci ( klient_id )
+);
+
+CREATE TABLE pozycje (
+	liczba_porzadkowa INTEGER GENERATED ALWAYS AS IDENTITY,
+	cena NUMERIC(10, 2) NOT NULL,
+	ilosc INTEGER NOT NULL,
+	produkt_nazwa VARCHAR(250) NOT NULL,
+	produkt_kwota NUMERIC(10, 2) NOT NULL,
+	id_zamowienia INTEGER NOT NULL,
+	CONSTRAINT pozycja_pk PRIMARY KEY ( liczba_porzadkowa ),
+	CONSTRAINT pozycja_zamowienie_fk FOREIGN KEY ( id_zamowienia ) REFERENCES zamowienia ( id_zamowienia ),
+	CONSTRAINT pozycje_UN FOREIGN KEY (produkt_nazwa, produkt_kwota) REFERENCES produkty(nazwa, kwota),
+	CONSTRAINT chk_cenaXilosc CHECK(cena=ilosc*produkt_kwota)
+); 
+
+
+INSERT INTO producenci
+VALUES('Asus'),
+('Amica'),
+('Samsung');
+
+INSERT INTO statusy
+VALUES('Wyprzedaz'),
+('Popularne'),
+('Polecane');
+
+INSERT INTO kategorie
+VALUES('Laptopy'),
+('AGD'),
+('Telefony');
+
+INSERT INTO podkategorie
+VALUES('Notebooki', 'Laptopy'),
+('Gamingowe', 'Laptopy'),
+('Kuchenki mikorfalowe', 'AGD'),
+('Zmywarki', 'AGD'),
+('iPhone', 'Telefony'),
+('Android', 'Telefony');
+
+INSERT INTO produkty
+VALUES('Asus G323 Gaming Laptop i9 4,3GHz RTX2060 6GB 12GB GDDR5', 233, 10999, 'Wysokiej jakosci laptop gamingowy dla
+	   najbardziej wymagajacych', 'Asus', 'Wyprzedaz', 'Gamingowe'),
+	  ('Zmywarka Amica X855', 99, 1999.99, 'Wydajna, ekonomiczna i niezawodna',
+		'Amica', 'Popularne', 'Zmywarki'),
+		('Smartfon Samsung S10 8/128GB', 49, 2699.99, DEFAULT, 'Samsung', 'Wyprzedaz', 'Android');
+
+INSERT INTO klienci(e_mail, adres, typ)
+VALUES('example@gmail.com', 'National Street 64/2 34-123 Canada', 'F'),
+('example22@gmail.com', 'ul. Radosna 5 12-123 Czestochowa', 'F'),
+('11exa2@gmail.com', 'ul. Wielkopolska 5/2 34-564 Pieniawy', 'P');
+
+INSERT INTO os_fizyczne
+VALUES(1, 'Wojciech', 'Trzmiel'),
+(2, 'Agata', 'Rybka');
+
+INSERT INTO os_prawne
+VALUES(3, 'CorporationUnited', '989234123');
+
+INSERT INTO komentarze
+VALUES('psyc12', 'Bardzo dobry, wydajny sprzet', 1, 'Asus G323 Gaming Laptop i9 4,3GHz RTX2060 6GB 12GB GDDR5'),
+('homeCooker', 'ekonomiczna i niezawodna! Polecam!', 2, 'Zmywarka Amica X855');
+
+INSERT INTO zamowienia(data_zamowienia, pelna_wartosc, status_platnosci, klient_id)
+VALUES('2019-02-02', 0, 'Oplacone', 1),
+('2020-02-03', 0, 'Nieoplacone', 2);
+
+INSERT INTO pozycje(cena, ilosc, produkt_nazwa, produkt_kwota, id_zamowienia)
+VALUES(9999.95, 5, 'Zmywarka Amica X855', 1999.99, 1),
+(5399.98, 2, 'Smartfon Samsung S10 8/128GB', 2699.99, 1),
+(13499.95, 5, 'Smartfon Samsung S10 8/128GB', 2699.99, 2);
+
+UPDATE zamowienia
+SET pelna_wartosc = (SELECT SUM(cena) FROM pozycje WHERE zamowienia.id_zamowienia=pozycje.id_zamowienia);
+
+
+
